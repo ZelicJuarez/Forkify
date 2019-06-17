@@ -1,13 +1,17 @@
-import string from "./models/Search";
+//All recipe requests should be made to the recipe details API URL.
+//https://www.food2fork.com/api/get
+import axios from "axios";
 
-//import { add, multiply, ID } from "./views/searchView";
-import { add as a, multiply as m, ID } from "./views/searchView";
-import * as searchView from "./views/searchView";
-
-console.log(`Using imported functions! ${a(ID, 2)} and ${m(3, 5)}. ${string}`);
-console.log(
-  `Using imported functions! ${searchView.add(
-    searchView.ID,
-    2
-  )} and ${searchView.multiply(3, 5)}. ${string}`
-);
+async function getResults(query) {
+  const key = "c95ec2732694b0f175af57e57b59ded9";
+  try {
+    const res = await axios(
+      `https://www.food2fork.com/api/search?key=${key}&q=${query}`
+    );
+    const recipes = res.data.recipes;
+    console.log(recipes);
+  } catch (error) {
+    alert(error);
+  }
+}
+getResults("tomato pasta");
