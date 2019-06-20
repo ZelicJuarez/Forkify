@@ -1,8 +1,26 @@
 import { elements } from "./base";
+import { fraction } from "fractional";
 
 export const clearRecipe = () => {
     elements.recipe.innerHTML = "";
   };
+
+const formatCount = count => {
+    if(count){
+        const [int, dec] = count.toString().split('.').map(el => parseInt(el, 10));
+
+        if(!dec) return count;
+
+        if(int === 0) {
+            const fr = new Fraction(count);
+            return `${fr.numerator}/${fr.denominator}`;
+        } else {
+            const fr = new Fraction(count - int);
+            return `${int} ${fr.numerator}/${fr.denominator}`;
+        }
+    }
+    return '?';
+}
 
 const createIngredient = ingredient  => `
 <li class="recipe__item">
